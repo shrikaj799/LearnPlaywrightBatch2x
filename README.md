@@ -50,7 +50,7 @@ graph TB
             ch7["Ch 7: If / Else ✅"]
             ch8["Ch 8: Switch ✅"]
             ch9["Ch 9: User Input ✅"]
-            ch10["Ch 10: Loops"]
+            ch10["Ch 10: Loops ✅"]
             ch11["Ch 11: Arrays"]
             ch12_fn["Ch 12: Functions & Strings"]
         end
@@ -192,12 +192,26 @@ LearnPlaywrightBatch2x/
 │   ├── 69_Node_readline.js             # Node built-in `readline` (async)
 │   └── 70_prompt_sync.js               # `prompt-sync` npm package (sync)
 │
+├── chapter_10_Loops/                   ✅ for, while, do-while, for-of/in, break/continue
+│   ├── 71_For_loop.js                  # Introducing the for loop
+│   ├── 72_For_loop.js                  # for loop with <= condition
+│   ├── 73_For_Loop2.js                 # Variable naming & loop boundaries
+│   ├── 74_IQ.js                        # Nested if/else inside a for loop
+│   ├── 75_For_OF_IN_EACH.js            # while loop — retry logic (arrays preview)
+│   ├── 76_While.js                     # while loop — init, condition, update
+│   ├── 77_Do_While.js                  # do-while — guaranteed one execution
+│   ├── 78_Do_While.js                  # do-while retry example
+│   ├── 79_IQ.js                        # while countdown (i--)
+│   ├── 80_IQ.js                        # do-while off-by-one trap
+│   ├── 81_IQ.js                        # for with `continue`
+│   └── 82_IQ.js                        # do-while infinite-loop trap
+│
 └── README.md                           👋 You are here
 ```
 
 > Each chapter has its **own README.md** with full code walk-throughs and expected output. Jump straight in:
 >
-> [Ch 1](./chapter_01_Basics/README.md) · [Ch 2](./chapter_02_Javascript_Concepts/README.md) · [Ch 3](./chapter_03_Identifier_Literals/README.md) · [Ch 4](./chapter_04_Javascript_Concepts/README.md) · [Ch 5](./chapter_05_Literal/README.md) · [Ch 6](./chapter_06_Operator/README.md) · [Ch 7](./chapter_07_If_else/README.md) · [Ch 8](./chapter_08_Switch_Statement/README.md) · [Ch 9](./chapter_09_UserInput/README.md)
+> [Ch 1](./chapter_01_Basics/README.md) · [Ch 2](./chapter_02_Javascript_Concepts/README.md) · [Ch 3](./chapter_03_Identifier_Literals/README.md) · [Ch 4](./chapter_04_Javascript_Concepts/README.md) · [Ch 5](./chapter_05_Literal/README.md) · [Ch 6](./chapter_06_Operator/README.md) · [Ch 7](./chapter_07_If_else/README.md) · [Ch 8](./chapter_08_Switch_Statement/README.md) · [Ch 9](./chapter_09_UserInput/README.md) · [Ch 10](./chapter_10_Loops/README.md)
 
 > **Legend:** ✅ Done · 🚧 Coming soon
 
@@ -1495,14 +1509,214 @@ mindmap
 
 ---
 
+## 📖 What's in Chapter 10 — Loops (Available Now)
+
+> 🔗 **Full walk-through:** [chapter_10_Loops/README.md](./chapter_10_Loops/README.md)
+
+### Files
+
+| File | Topic | What you'll learn |
+|------|-------|-------------------|
+| `71_For_loop.js` | For loop intro | Why loops exist — replacing repeated `console.log` lines |
+| `72_For_loop.js` | For with `<=` | `i = 0; i <= 5` runs 6 times (0 through 5) |
+| `73_For_Loop2.js` | Loop boundaries | `i <= 10` vs `i < 10` — 11 vs 10 iterations |
+| `74_IQ.js` | Loop + if/else | Combine loops with conditional branching |
+| `75_For_OF_IN_EACH.js` | while retry | while loop as a retry mechanism |
+| `76_While.js` | while loop | Three parts: init, condition, update |
+| `77_Do_While.js` | do-while | Guaranteed one execution regardless of condition |
+| `78_Do_While.js` | do-while retry | Retry with do-while (always runs at least once) |
+| `79_IQ.js` | while countdown | Decrementing loop — `i--` instead of `i++` |
+| `80_IQ.js` | do-while trap | Do-while off-by-one: runs once even when condition is false |
+| `81_IQ.js` | continue in for | `continue` skips current iteration, next one runs |
+| `82_IQ.js` | do-while infinite | do-while with always-true condition |
+
+### Key Concepts
+
+```mermaid
+mindmap
+  root((Chapter 10 — Loops))
+    for
+      init; condition; update
+      i++ increment
+      i-- decrement
+    while
+      checks condition first
+      might never run
+    do-while
+      runs at least once
+      checks after body
+    break
+      exits loop early
+    continue
+      skips current iteration
+```
+
+### Run them
+
+```bash
+node chapter_10_Loops/71_For_loop.js          # → 1 to 10 + introduction
+node chapter_10_Loops/72_For_loop.js          # → 0, 1, 2, 3, 4, 5
+node chapter_10_Loops/73_For_Loop2.js         # → 0 to 10 (11 iterations)
+node chapter_10_Loops/74_IQ.js               # → for + if/else
+node chapter_10_Loops/75_For_OF_IN_EACH.js   # → while retry
+node chapter_10_Loops/76_While.js            # → while countdown
+node chapter_10_Loops/77_Do_While.js         # → do-while guaranteed run
+node chapter_10_Loops/78_Do_While.js         # → do-while retry
+node chapter_10_Loops/79_IQ.js               # → 5, 4, 3, 2, 1
+node chapter_10_Loops/80_IQ.js               # → 0 (do-while off-by-one)
+node chapter_10_Loops/81_IQ.js               # → 0, 2 (continue skips 1)
+node chapter_10_Loops/82_IQ.js               # → 1 only (infinite if not careful)
+```
+
+### 71 — For Loop
+
+**Concept:** A `for` loop replaces manually repeating `console.log` calls. It has three parts: **initialization** (`let i = 0`), **condition** (`i < N`), and **update** (`i++`). The body runs while the condition is true.
+
+**Why:** Anywhere you need to iterate a known number of times — processing test data rows, retrying a flaky API, generating N test values.
+
+```js
+// 71_For_loop.js — the "why loops" file
+console.log(1);
+console.log(2);
+console.log(3);
+// ... imagine 100 lines ...
+console.log(10);
+
+// For Loop — helps you repeat a block of code
+```
+
+```js
+// 72_For_loop.js — basic for with <=
+for (let i = 0; i <= 5; i++) {
+    console.log(i);  // 0, 1, 2, 3, 4, 5
+}
+```
+
+| File | `for` loop | Iterations | Output |
+|:--|:--|:--:|:--|
+| `72_For_loop.js` | `i = 0; i <= 5; i++` | 6 | 0, 1, 2, 3, 4, 5 |
+| `73_For_Loop2.js` | `i = 0; i <= 10; i++` | 11 | 0 to 10 |
+| `74_IQ.js` | `i = 0; i < 18; i++` + if/else | 18 | conditional gift logic |
+
+**Key pattern — three parts of a for loop:**
+
+```mermaid
+flowchart LR
+    I["init<br/>let i = 0"] --> C{"condition<br/>i < 5 ?"}
+    C -->|true| B[run body]
+    B --> U["update<br/>i++"]
+    U --> C
+    C -->|false| D[Done ✅]
+    style I fill:#e3f2fd,stroke:#01579b
+    style C fill:#fff3e0,stroke:#e65100
+    style U fill:#f3e5f5,stroke:#7b1fa2
+```
+
+### 76 — While Loop
+
+**Concept:** `while (condition) { … }` checks the condition **before** each iteration. If the condition is already false, the body **never runs**. Three essential parts: init (`let i = 0`), condition (`i < 5`), update (`i++`).
+
+**Why:** Use when you don't know how many iterations you need — retrying an API until it succeeds, reading lines until EOF, polling until a condition is met.
+
+```js
+// 76_While.js — the three-part pattern
+let attempt = 0;          // init
+while (attempt < 3) {     // condition
+    console.log(attempt);
+    attempt++;            // update
+}
+
+let modi = 1;
+while (modi <= 15) {
+    console.log("Modi will do 15+ years");
+    modi++;
+}
+```
+
+### 77 — Do-While Loop
+
+**Concept:** `do { … } while (condition)` runs the body **at least once** — the condition is checked *after* the body. Guaranteed one execution regardless of the condition.
+
+**Why:** "Try once, then check if you need to retry" — perfect for login prompts, data fetch + retry, or any action that must happen at least once.
+
+```js
+// 77_Do_While.js — runs once even when a >= 10
+let a = 10;
+do {
+    console.log(a);   // prints 10
+    a++;
+} while (a < 10);     // condition already false, but body ran
+
+// 78_Do_While.js — retry pattern
+let retry = 0;
+do {
+    console.log("Execute a code!");
+    console.log("Retrying.....", retry);
+    retry++;
+} while (retry < 3);
+```
+
+| Loop type | Condition check | Minimum runs | When to use |
+|:--|:--|:--:|:--|
+| `for` | Before each iteration | 0 | Known iteration count |
+| `while` | Before each iteration | 0 | Unknown count, maybe zero |
+| `do-while` | After each iteration | **1** | Must run at least once |
+
+### 79–80 — IQ: Countdown & Off-by-One
+
+**Concept:** `i--` decrements the counter — same loop, different direction. Do-while off-by-one: when the condition starts false, it still executes once (the body prints, then the condition fails).
+
+```js
+// 79_IQ.js — countdown
+let i = 5;
+while (i > 0) {
+    console.log(i);   // 5, 4, 3, 2, 1
+    i--;
+}
+
+// 80_IQ.js — do-while off-by-one trap
+let i = 0;
+do {
+    console.log(i);   // prints 0 (once), then condition fails
+    i--;
+} while (i > 0);      // i is -1, condition is false → loop ends
+```
+
+### 81 — Continue
+
+**Concept:** `continue` skips the **rest of the current iteration** and jumps to the next one. Unlike `break`, it doesn't exit the loop — it only skips.
+
+```js
+// 81_IQ.js
+for (let i = 0; i < 3; i++) {
+    if (i === 1) continue;    // skip the rest when i is 1
+    console.log(i);           // 0, 2
+}
+```
+
+### 82 — Do-While Always-True Trap
+
+**Concept:** A do-while loop where the condition is always true will run **forever** (infinite loop) unless you `break` or it's intentionally bounded.
+
+```js
+// 82_IQ.js — pattern: runs at least once
+let n = 1;
+do {
+    console.log(n);   // prints 1
+} while (n < 3);      // 1 < 3 → true → runs again... wait, there's no update!
+```
+
+**Takeaway:** Always include an update (`n++`) or a `break` inside a loop body. No update = infinite loop = frozen program.
+
+---
+
 ## 🔭 What's Coming Next
 
 ```mermaid
 graph TD
-    subgraph next["Next Up — Loops, Data & Functions"]
-        N1[Ch 10: Loops — for, while, do-while] --> N2[Ch 11: Arrays]
-        N2 --> N3[Ch 12: Functions & Strings]
-        N3 --> N4[Ch 13: Objects]
+    subgraph next["Next Up — Arrays, Functions & More"]
+        N1[Ch 11: Arrays] --> N2[Ch 12: Functions & Strings]
+        N2 --> N3[Ch 13: Objects]
     end
 
     style next fill:#fff3e0,stroke:#e65100
@@ -1516,6 +1730,7 @@ graph TD
 - ✅ Chapter 7 — **If / Else**: basic if/else, else-if ladder, nested conditions, truthy/falsy, logical operators, IQ problems (files `48`–`58`)
 - ✅ Chapter 8 — **Switch Statement**: switch basics, fall-through, default, grouped cases, IQ traps (files `59`–`67`)
 - ✅ Chapter 9 — **User Input**: browser `prompt()`, Node `readline`, `prompt-sync` (files `68`–`70`)
+- ✅ Chapter 10 — **Loops**: for, while, do-while, continue, IQ traps (files `71`–`82`)
 - ✅ **Per-chapter README** — every chapter folder now has its own deep-dive README.md
 
 ---
