@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Learn Playwright Batch 2x
 
 <div align="center">
@@ -1863,3 +1864,6 @@ npx playwright show-trace <trace.zip>    # Open trace viewer
 — Pramod & The Testing Academy team
 
 </div>
+=======
+add
+>>>>>>> 237d78dbf7619f57d3c8363cbcf1bc8e174a26cf
