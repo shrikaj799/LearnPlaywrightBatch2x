@@ -2,8 +2,12 @@
 //     console.log(i);
 // }
 
-for (let i = 0; i <= 5; i++) {
+/*for (let i = 0; i <= 5; i++) {
     console.log(i);
 }
 
-0, 1, 2, 3, 4, 5
+0, 1, 2, 3, 4, 5*/
+ for(let i=0; i<20;i++)
+ {
+    console.log(i)
+ }

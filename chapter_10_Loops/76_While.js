@@ -1,4 +1,4 @@
-let attempt = 0; // Init
+/*let attempt = 0; // Init
 while (attempt < 3) { // Condition
     console.log(attempt);
     attempt++; // Updation
@@ -10,4 +10,14 @@ while (modi <= 15) { // 1 to 15,Times ->
     console.log("Modi will do 15+ years");
     modi++;
 
-}
+}*/
+
+let i=1;
+
+while(i<=5){
+    console.log(i)
+    i++;
+    }
+  
+
+
